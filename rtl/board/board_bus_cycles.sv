@@ -10,7 +10,8 @@
       age 0  address stable, page map read in flight
       age 1  page map output valid: fault evaluation, status registers, map status update; a write may fire
       age 2  read strobe for side effects, RAM / ROM output valid
-      age 3  DTACK* / BERR* asserted (the answer is registered one clock after the condition holds from age 2 on)
+      age 3  DTACK* / BERR* asserted (the answer is registered one clock after the condition holds from age 2 on); an external RAM read that is sure
+             to be back in time (cpu_dtack_early_ok) gets DTACK* at age 2, which is the 68010's zero wait state cycle
 
     An interrupt acknowledge (FC = 111, "CPU space") is answered with VPA*, the 68010's autovector request, and gets no DTACK*. A write drives its
     byte strobes late in the cycle, so a faulting write is only reported (BERR*, status registers) once UDS* / LDS* are valid: the status registers
@@ -38,6 +39,7 @@ import unixpc_registers_pkg::*;
     input         strobes_valid,                /* UDS* or LDS* is asserted */
     input         cpu_bus_error,                /* bus error condition, enabled by GCR EE */
     input         cpu_ram_not_ready,            /* external RAM transaction of this cycle not finished (EXT_RAM) */
+    input         cpu_dtack_early_ok,           /* the external RAM read of this cycle is sure to be back in time: DTACK* may go out at age 2 (EXT_RAM) */
 
     output        cycle_active,                 /* a CPU bus cycle is in progress */
     output        cpu_space,                    /* FC = 111: interrupt acknowledge (the board answers with VPA*, no DTACK*) */
@@ -84,7 +86,7 @@ assign write_waiting_for_strobes = cpu_write & ~strobes_valid;
 
 /* DTACK* / BERR* follow the condition one clock later and only while AS* is still asserted. A faulting write waits for its strobes, then BERR*. */
 always @(posedge clk) begin
-    dtack_ready <= cycle_active & ~cpu_space & (cycle_age >= 4'd2) & ~cpu_bus_error & ~cpu_ram_not_ready;
+    dtack_ready <= cycle_active & ~cpu_space & ((cycle_age >= 4'd2) | (cpu_dtack_early_ok & (cycle_age >= 4'd1))) & ~cpu_bus_error & ~cpu_ram_not_ready;
     berr_ready  <= cycle_active & ~cpu_space & (cycle_age >= 4'd2) &  cpu_bus_error & ~write_waiting_for_strobes;
 end
 

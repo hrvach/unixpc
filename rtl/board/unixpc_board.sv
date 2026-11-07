@@ -278,6 +278,7 @@ wire        dma_access_checked;
 wire        dma_access_faults;
 wire        dma_access_done;
 wire        cpu_ram_not_ready;                  /* external RAM transaction of the CPU access not finished (EXT_RAM) */
+wire        cpu_dtack_early_ok;                 /* the external RAM read of this CPU cycle is sure to be back in time (EXT_RAM) */
 wire        dma_ram_not_ready;
 wire        sdram_access_done;
 
@@ -327,6 +328,7 @@ board_bus_cycles #(.EXT_RAM(EXT_RAM)) bus_cycles
     .strobes_valid             (strobes_valid),
     .cpu_bus_error             (cpu_bus_error),
     .cpu_ram_not_ready         (cpu_ram_not_ready),
+    .cpu_dtack_early_ok        (cpu_dtack_early_ok),
     .cycle_active              (cycle_active),
     .cpu_space                 (cpu_space),
     .cycle_age                 (cycle_age),
@@ -350,6 +352,7 @@ board_bus_cycles #(.EXT_RAM(EXT_RAM)) bus_cycles
 wire [21:1] ram_word_address         = {page_map_entry[9:0], (dma_active ? dma_word_address[11:1] : cpu_addr[11:1])};
 wire        address_in_installed_ram = ((ram_word_address[21:19] >> configuration.ram_size) == 3'd0);
 wire [15:0] ram_read_data;
+wire [15:0] dma_read_data;
 
 wire        cpu_ram_write_strobe = write_go & ram_region & nCASDIS & address_in_installed_ram;
 wire        dma_ram_write_strobe = dma_access_checked & dma_write & nCASDIS & address_in_installed_ram;
@@ -379,6 +382,7 @@ ram_port #(.EXT_RAM(EXT_RAM)) rport
     .ram_byte_enables         (ram_byte_enables),
     .ram_write_data           (ram_write_data),
     .ram_read_data            (ram_read_data),
+    .dma_read_data            (dma_read_data),
     .cpu_must_wait            (cpu_ram_not_ready),
     .dma_must_wait            (dma_ram_not_ready),
     .sdram_access_done        (sdram_access_done),
@@ -388,7 +392,9 @@ ram_port #(.EXT_RAM(EXT_RAM)) rport
     .sdram_byte_enables       (sdram_request.byte_enables),
     .sdram_write_data         (sdram_request.write_data),
     .sdram_read_data          (sdram_response.read_data),
-    .sdram_ack_toggle         (sdram_response.acknowledge_toggle)
+    .sdram_ack_toggle         (sdram_response.acknowledge_toggle),
+    .sdram_fast_ok            (sdram_response.fast_ok),
+    .cpu_dtack_early_ok       (cpu_dtack_early_ok)
 );
 
 /* ---- bad parity flags (board_parity.sv): a CPU read of base RAM that hits a flagged byte raises PERR* */
@@ -530,7 +536,7 @@ disk_ctrl_pins #(.DMA_TRACE(DMA_TRACE)) disk
     .m_wdata            (disk_write_data),
     .m_done             (dma_access_done),
     .m_fault            (dma_access_faults),
-    .m_rdata            (address_in_installed_ram ? ram_read_data : 16'hffff),
+    .m_rdata            (address_in_installed_ram ? dma_read_data : 16'hffff),
     .ddr_rd             (disk_image_request.read),
     .ddr_we             (disk_image_request.write),
     .ddr_addr           (disk_image_request.address),
@@ -731,7 +737,7 @@ eth_board #(.SLOT(ETH_SLOT), .BOARD_ID(ETH_BOARD_ID), .MAC(ETH_MAC)) eth
     .m_be    (ethernet_byte_enables),
     .m_done  (dma_access_done),
     .m_fault (dma_access_faults),
-    .m_rdata (address_in_installed_ram ? ram_read_data : 16'hffff),
+    .m_rdata (address_in_installed_ram ? dma_read_data : 16'hffff),
     .tx_vld  (ethernet_phy_out.tx_valid),
     .tx_dat  (ethernet_phy_out.tx_data),
     .tx_end  (ethernet_phy_out.tx_end),

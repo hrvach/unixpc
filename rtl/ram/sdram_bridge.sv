@@ -5,8 +5,9 @@
     SDRAM controller sdram16 (sdram.sv) running at about 100 MHz. FPGA only.
 
     One transaction at a time. The board flips request_toggle and holds the address, write flag, byte enables and data stable until acknowledge_toggle
-    equals request_toggle. Both toggles cross the clock domains through two flip flops; the payload is not synchronised (it is stable for the whole
-    transaction). The read data stays in read_data until the next transaction.
+    equals request_toggle. The two clocks are phase locked (same PLL, 1:5), so the toggles are used directly, without synchronisers (see below); the
+    payload is registered on the board side at the launch edge and stable for the whole transaction. The read data stays in read_data until the next
+    transaction.
 
     Bad parity flags (the diagnostic parity test): one flag per byte of the lower 2 MB, kept in the SDRAM itself above the RAM (byte address 16 MB,
     256 KB, 16 flags per word: flag word = word address [19:3], flag bits {word address [2:0], lane}). The flags are only touched while
@@ -40,7 +41,9 @@ module sdram_bridge
     output reg [1:0]  sd_wtbt,
     output reg [15:0] sd_din,
     input      [15:0] sd_dout,
-    input             sd_ready
+    input             sd_ready,
+    input             sd_idle_ok,               /* the controller is idle and no refresh is near (sdram.sv) */
+    output reg        fast_ok                   /* a read launched now is answered in the shortest possible time: the board may release DTACK* early */
 );
 
 /* ---- the reset and the request toggle come over from the board clock, the acknowledge goes back */
@@ -51,20 +54,17 @@ always @(posedge clk_sd)
 
 assign sd_init = reset_synchroniser[2];
 
-reg [1:0] request_synchroniser = 2'b00;
+/*
+    The two toggles are NOT synchronised. clk (20 MHz) and clk_sd (100 MHz) come from the same PLL with an exact 1:5 ratio and aligned edges, so
+    a toggle launched by one clock is sampled by the other no later than one clk_sd period (10 ns) after the launching edge. The path is an
+    ordinary single flop to flop path in static timing (3B1.sdc relates the two clocks) and needs to meet that 10 ns. Two flip flops in each
+    direction used to cost about 120 ns per RAM access, a third of the 68010's 400 ns bus cycle.
+*/
+wire request_pending_toggle = request_toggle;
 
-always @(posedge clk_sd)
-    request_synchroniser <= {request_synchroniser[0], request_toggle};
+reg  acknowledge_in_sd_domain = 1'b0;
 
-wire request_pending_toggle = request_synchroniser[1];
-
-reg       acknowledge_in_sd_domain = 1'b0;
-reg [1:0] acknowledge_synchroniser = 2'b00;
-
-always @(posedge clk)
-    acknowledge_synchroniser <= {acknowledge_synchroniser[0], acknowledge_in_sd_domain};
-
-assign acknowledge_toggle = acknowledge_synchroniser[1];
+assign acknowledge_toggle = acknowledge_in_sd_domain;
 
 /*
     States. Every request to the controller is a rd / we pulse (set in an ISSUE state, visible in the following WAIT_START state) followed by a wait
@@ -113,6 +113,13 @@ wire        flags_needed = parity_flags_in_use & ~word_address[21];
 always @(posedge clk_sd) begin
     sd_rd <= 1'b0;
     sd_we <= 1'b0;
+
+    /*
+        The shortest read: this bridge idle with nothing pending, the controller idle with no refresh near, and the parity flags not in use (a read then
+        also reads the flag word, a second access). The board samples it when it launches a read; nothing can make this untrue before the request arrives
+        (the bridge and the controller leave IDLE only for a request, which only the board makes, one at a time).
+    */
+    fast_ok <= (state == IDLE) & (request_pending_toggle == acknowledge_in_sd_domain) & sd_idle_ok & ~parity_flags_in_use & ~sd_init;
 
     case (state)
         IDLE: begin

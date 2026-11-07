@@ -52,7 +52,8 @@ module sdram16
    input      [15:0] din,         /* data input from cpu */
    input             we,          /* cpu requests write */
    input             rd,          /* cpu requests read */
-   output reg        ready        /* dout is valid. Ready to accept new read/write. */
+   output reg        ready,       /* dout is valid. Ready to accept new read/write. */
+   output            idle_ok      /* idle, nothing pending and no refresh near: a read issued now is answered in the shortest time (see sdram_bridge.sv) */
 );
 
 assign SDRAM_CKE  = 1;
@@ -100,17 +101,21 @@ typedef enum
 	STATE_IDLE_4, STATE_IDLE_5, STATE_IDLE_6, STATE_IDLE_7
 } state_t;
 
+state_t state = STATE_STARTUP;
+reg        new_we;
+reg        new_rd;
+
+/* A request that arrives while this is true is accepted at once and cannot run into a refresh: a refresh starts only from IDLE_1 after an access or from
+   IDLE beyond twice the refresh interval, so with the count this far below that limit nothing intervenes before the request is taken. */
+assign idle_ok = (state == STATE_IDLE) & ~new_rd & ~new_we & (refresh_count < 14'd1000) & ~init;
+
 always @(posedge clk) begin
 	reg old_we, old_rd;
 	reg [CAS_LATENCY+1:0] data_ready_delay;   /* +1: read data is captured one controller clock later than in the original (see below) */
 
 	reg [15:0] new_data;
 	reg  [1:0] new_wtbt;
-	reg        new_we;
-	reg        new_rd;
 	reg        save_we = 1;
-
-	state_t state = STATE_STARTUP;
 
 	SDRAM_DQ <= 16'bZ;
 	command <= CMD_NOP;

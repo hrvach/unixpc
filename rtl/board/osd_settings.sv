@@ -39,7 +39,7 @@ module osd_settings
     output   [1:0] glow_mode,                   /* 0 off, 1 low, 2 mid, 3 high */
     output   [1:0] glow_noise,                  /* 0 off, 1 low, 2 mid, 3 high */
     output         edges_on,
-    output         round_corners,               /* [12]: the corners of the picture cut to a quarter circle: 0 = on (default), 1 = off */
+    output         round_corners,               /* [12]: the corners of the picture cut to a quarter circle: 0 = off (default), 1 = on */
     output   [1:0] roll_band,                   /* 0 off, 1 low, 2 mid, 3 high */
     output   [1:0] line_wobble,                 /* 0 off, 1 low, 2 mid, 3 high */
     output   [1:0] noise,                       /* 0 off, 1 low, 2 mid, 3 high */
@@ -58,7 +58,7 @@ assign eject_floppy_request = status[38];
 assign invert_video         = status[6];
 assign phosphor_on          = ~status[11];
 assign edges_on             = ~status[13];
-assign round_corners        = ~status[12];
+assign round_corners        = status[12];
 assign curvature_on         = ~status[43];
 assign bezel_on             = ~status[44];
 assign call_sounds_on       = ~status[34];

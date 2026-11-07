@@ -58,7 +58,7 @@ assign BUTTONS   = 0;
       [9]        Floppy: 0 = 10 sectors per track, 1 = 8 sectors per track
       [11]       Phosphor persistence (4 bit per pixel, exponential fade, dark after 16 frames = 0.27 s): 0 = on (default), 1 = off
       [13]       Screen edges (brightness falloff towards the edges): 0 = on (default), 1 = off
-      [12]       Round corners (the corners of the screen rounded by 28 pixels instead of 4): 0 = on (default), 1 = off
+      [12]       Round corners (the corners of the screen rounded by 28 pixels instead of 4): 0 = off (default), 1 = on
       [15:14]    Glow: 0 = mid (default), 1 = high, 2 = low, 3 = off
       [17:16]    Glass (dark level of the tube face, 45 / 60 / 68): 0 = low (default), 1 = mid, 2 = high, 3 = off
       [43]       Curvature (barrel distortion of the picture, fixed strength 0.031): 0 = on (default), 1 = off
@@ -106,7 +106,7 @@ localparam CONF_STR = {
     "P1O[29:28],Noise,Mid,High,Low,Off;",
     "P1O[31:30],Glow noise,Mid,High,Low,Off;",
     "P1O[13],Screen edges,On,Off;",
-    "P1O[12],Round corners,On,Off;",
+    "P1O[12],Round corners,Off,On;",
     "O[20:19],Ethernet,eth0,Off,macvlan;",
     "O[21],Serial loopback plug,Off,On;",
     "O[42:41],Serial port,MiSTer UART,User port,Both;",
@@ -583,6 +583,7 @@ main_ram main_ram
     .sdram_read_data           (sdram_response.read_data),
     .sdram_bad_parity_flags    (sdram_response.bad_parity_flags),
     .sdram_acknowledge_toggle  (sdram_response.acknowledge_toggle),
+    .sdram_fast_ok             (sdram_response.fast_ok),
     .SDRAM_DQ                  (SDRAM_DQ),
     .SDRAM_A                   (SDRAM_A),
     .SDRAM_DQML                (SDRAM_DQML),

@@ -77,6 +77,7 @@ package board_ports_pkg;
         logic [15:0] read_data;
         logic acknowledge_toggle;        /* equals request_toggle when the transaction is done */
         logic [1:0] bad_parity_flags;        /* flags of the bytes just read */
+        logic fast_ok;        /* a read launched now is answered in the shortest time: DTACK* may go out early */
     } sdram_response_t;
 
     /* disk image storage (64 bit DDRAM style port), requests */

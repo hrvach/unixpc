@@ -19,6 +19,7 @@ module main_ram
     output [15:0] sdram_read_data,
     output [1:0]  sdram_bad_parity_flags,
     output        sdram_acknowledge_toggle,
+    output        sdram_fast_ok,
     inout  [15:0] SDRAM_DQ,  /* the SDRAM chip on the add-on board */
     output [12:0] SDRAM_A,
     output        SDRAM_DQML,
@@ -37,6 +38,7 @@ wire        sdram_init;
 wire        sdram_read_pulse;
 wire        sdram_write_pulse;
 wire        sdram_ready;
+wire        sdram_idle_ok;
 wire [24:0] sdram_controller_address;
 wire  [1:0] sdram_controller_byte_mask;
 wire [15:0] sdram_controller_write_data;
@@ -64,7 +66,9 @@ sdram_bridge sdram_clock_bridge
     .sd_wtbt             (sdram_controller_byte_mask),
     .sd_din              (sdram_controller_write_data),
     .sd_dout             (sdram_controller_read_data),
-    .sd_ready            (sdram_ready)
+    .sd_ready            (sdram_ready),
+    .sd_idle_ok          (sdram_idle_ok),
+    .fast_ok             (sdram_fast_ok)
 );
 
 sdram16 sdram
@@ -88,7 +92,8 @@ sdram16 sdram
     .din        (sdram_controller_write_data),
     .we         (sdram_write_pulse),
     .rd         (sdram_read_pulse),
-    .ready      (sdram_ready)
+    .ready      (sdram_ready),
+    .idle_ok    (sdram_idle_ok)
 );
 
 endmodule
