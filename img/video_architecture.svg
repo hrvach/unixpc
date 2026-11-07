@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1015" width="100%" height="100%">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
+    </marker>
+
+    <style>
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 28px; font-weight: bold; fill: #111; text-anchor: middle; }
+      .label-bold { font-family: system-ui, -apple-system, sans-serif; font-size: 18px; font-weight: 700; fill: #111; text-anchor: middle; }
+      .label-sub { font-family: system-ui, -apple-system, sans-serif; font-size: 15px; fill: #444; text-anchor: middle; }
+      .text-left { font-family: system-ui, -apple-system, sans-serif; font-size: 15px; fill: #555; }
+      .zone-title { font-family: system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 700; fill: #333; }
+      .head { font-family: system-ui, -apple-system, sans-serif; font-size: 18px; font-weight: 700; fill: #111; }
+
+      .box-green { fill: #ebf5eb; stroke: #2f6338; stroke-width: 2; rx: 6; }
+      .box-yellow { fill: #fdf4de; stroke: #b58428; stroke-width: 2; rx: 6; }
+      .box-blue { fill: #eaf0f9; stroke: #3f66a2; stroke-width: 2; rx: 6; }
+      .zone-machine { fill: #f7f9fc; stroke: #8a9bb8; stroke-width: 1.5; stroke-dasharray: 6,6; rx: 8; }
+      .zone-video { fill: #fbf8f1; stroke: #bfa56a; stroke-width: 1.5; stroke-dasharray: 6,6; rx: 8; }
+      .conn-line { stroke: #333333; stroke-width: 2; fill: none; }
+      .bar-line { fill: #b58428; }
+      .bar-machine { fill: #6f86ad; }
+    
+    /* Dark theme: the page behind the picture is dark on GitHub */
+    @media (prefers-color-scheme: dark) {
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 28px; font-weight: bold; fill: #e6e6e6; text-anchor: middle; }
+      .label-bold { font-family: system-ui, -apple-system, sans-serif; font-size: 18px; font-weight: 700; fill: #e6e6e6; text-anchor: middle; }
+      .label-sub { font-family: system-ui, -apple-system, sans-serif; font-size: 15px; fill: #c0c6cf; text-anchor: middle; }
+      .text-left { font-family: system-ui, -apple-system, sans-serif; font-size: 15px; fill: #aab; }
+      .zone-title { font-family: system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 700; fill: #cfd5de; }
+      .head { font-family: system-ui, -apple-system, sans-serif; font-size: 18px; font-weight: 700; fill: #e6e6e6; }
+
+      .box-green { fill: #1f3425; stroke: #6fae82; stroke-width: 2; rx: 6; }
+      .box-yellow { fill: #2a2415; stroke: #d9a24a; stroke-width: 2; rx: 6; }
+      .box-blue { fill: #1d2a3d; stroke: #6f9be0; stroke-width: 2; rx: 6; }
+      .zone-machine { fill: #161b22; stroke: #4f6a94; stroke-width: 1.5; stroke-dasharray: 6,6; rx: 8; }
+      .zone-video { fill: #1c1a14; stroke: #8a7340; stroke-width: 1.5; stroke-dasharray: 6,6; rx: 8; }
+      .conn-line { stroke: #cfd5de; stroke-width: 2; fill: none; }
+      .bar-line { fill: #d9a24a; }
+      .bar-machine { fill: #6f86ad; }
+    
+      [fill="#111"] { fill: #e6e6e6; }
+      [stroke="#111"] { stroke: #e6e6e6; }
+      [fill="#333"] { fill: #cfd5de; }
+      [stroke="#333"] { stroke: #cfd5de; }
+      [fill="#333333"] { fill: #cfd5de; }
+      [stroke="#333333"] { stroke: #cfd5de; }
+      [fill="#444"] { fill: #c0c6cf; }
+      [stroke="#444"] { stroke: #c0c6cf; }
+      [fill="#555"] { fill: #aab; }
+      [stroke="#555"] { stroke: #aab; }
+      [fill="#f7f9fc"] { fill: #161b22; }
+      [stroke="#f7f9fc"] { stroke: #161b22; }
+      [fill="#8a9bb8"] { fill: #4f6a94; }
+      [stroke="#8a9bb8"] { stroke: #4f6a94; }
+      [fill="#fbf8f1"] { fill: #1c1a14; }
+      [stroke="#fbf8f1"] { stroke: #1c1a14; }
+      [fill="#bfa56a"] { fill: #8a7340; }
+      [stroke="#bfa56a"] { stroke: #8a7340; }
+      [fill="#eaf0f9"] { fill: #1d2a3d; }
+      [stroke="#eaf0f9"] { stroke: #1d2a3d; }
+      [fill="#3f66a2"] { fill: #6f9be0; }
+      [stroke="#3f66a2"] { stroke: #6f9be0; }
+      [fill="#fdf4de"] { fill: #2a2415; }
+      [stroke="#fdf4de"] { stroke: #2a2415; }
+      [fill="#b58428"] { fill: #d9a24a; }
+      [stroke="#b58428"] { stroke: #d9a24a; }
+      [fill="#ebf5eb"] { fill: #1f3425; }
+      [stroke="#ebf5eb"] { stroke: #1f3425; }
+      [fill="#2f6338"] { fill: #6fae82; }
+      [stroke="#2f6338"] { stroke: #6fae82; }
+      [fill="#ffffff"] { fill: #0d1117; }
+      [stroke="#ffffff"] { stroke: #0d1117; }
+    }
+  </style>
+  </defs>
+
+  <text x="450" y="44" class="title">How the picture is made</text>
+
+  <rect x="20" y="120" width="860" height="208" class="zone-machine" />
+  <text x="36" y="150" class="zone-title">The machine: 20 MHz, 720 × 348, brightness effects</text>
+  <rect x="20" y="512" width="860" height="208" class="zone-video" />
+  <text x="36" y="542" class="zone-title">The output: 75 MHz, 1280 × 720</text>
+
+  <g transform="translate(40,168)">
+    <rect width="190" height="140" class="box-blue" />
+    <text x="95.0" y="34" class="label-bold">Video RAM</text>
+    <text x="95.0" y="62" class="label-sub">32 KB bitmap</text>
+    <text x="95.0" y="84" class="label-sub">1 bit per pixel</text>
+    <text x="95.0" y="106" class="label-sub">written by the CPU,</text>
+    <text x="95.0" y="128" class="label-sub">read by the scan-out</text>
+  </g>
+  <g transform="translate(250,168)">
+    <rect width="190" height="140" class="box-blue" />
+    <text x="95.0" y="34" class="label-bold">Persistence</text>
+    <text x="95.0" y="62" class="label-sub">122 KB RAM, 4 bits</text>
+    <text x="95.0" y="84" class="label-sub">for every pixel,</text>
+    <text x="95.0" y="106" class="label-sub">fades out in 8 frames</text>
+    <text x="95.0" y="128" class="label-sub">(the only full frame)</text>
+  </g>
+  <g transform="translate(460,168)">
+    <rect width="190" height="140" class="box-yellow" />
+    <text x="95.0" y="34" class="label-bold">Glow</text>
+    <text x="95.0" y="62" class="label-sub">blur 5 × 3 pixels,</text>
+    <text x="95.0" y="84" class="label-sub">added to the sharp</text>
+    <text x="95.0" y="106" class="label-sub">picture as a halo,</text>
+    <text x="95.0" y="128" class="label-sub">2 line buffers</text>
+  </g>
+  <g transform="translate(670,168)">
+    <rect width="190" height="140" class="box-yellow" />
+    <text x="95.0" y="34" class="label-bold">Noise, flicker</text>
+    <text x="95.0" y="62" class="label-sub">16 bit LFSR,</text>
+    <text x="95.0" y="84" class="label-sub">one step per pixel,</text>
+    <text x="95.0" y="106" class="label-sub">8 bit brightness out</text>
+  </g>
+  <line x1="230" y1="238" x2="250" y2="238" class="conn-line" marker-end="url(#arrow)" />
+  <line x1="440" y1="238" x2="460" y2="238" class="conn-line" marker-end="url(#arrow)" />
+  <line x1="650" y1="238" x2="670" y2="238" class="conn-line" marker-end="url(#arrow)" />
+  <g transform="translate(270,375)">
+    <rect width="590" height="90" class="box-blue" />
+    <text x="295.0" y="32" class="label-bold">Ring buffer: 64 lines, 64 KB</text>
+    <text x="295.0" y="62" class="label-sub">written at 20 MHz, read at 75 MHz</text>
+  </g>
+  <line x1="765" y1="308" x2="765" y2="375" class="conn-line" marker-end="url(#arrow)" />
+  <g transform="translate(600,560)">
+    <rect width="260" height="140" class="box-yellow" />
+    <text x="130.0" y="34" class="label-bold">Geometry</text>
+    <text x="130.0" y="62" class="label-sub">barrel distortion,</text>
+    <text x="130.0" y="84" class="label-sub">line wobble,</text>
+    <text x="130.0" y="106" class="label-sub">bilinear sampling</text>
+  </g>
+  <g transform="translate(320,560)">
+    <rect width="260" height="140" class="box-yellow" />
+    <text x="130.0" y="34" class="label-bold">Glass, frame</text>
+    <text x="130.0" y="62" class="label-sub">dark glass, edges, corners,</text>
+    <text x="130.0" y="84" class="label-sub">roll band, phosphor colour,</text>
+    <text x="130.0" y="106" class="label-sub">bezel from a ROM</text>
+  </g>
+  <g transform="translate(40,560)">
+    <rect width="260" height="140" class="box-green" />
+    <text x="130.0" y="34" class="label-bold">HDMI</text>
+    <text x="130.0" y="62" class="label-sub">1280 × 720, 60 Hz</text>
+  </g>
+  <line x1="600" y1="630" x2="580" y2="630" class="conn-line" marker-end="url(#arrow)" />
+  <line x1="320" y1="630" x2="300" y2="630" class="conn-line" marker-end="url(#arrow)" />
+  <line x1="765" y1="465" x2="765" y2="560" class="conn-line" marker-end="url(#arrow)" />
+  <g transform="translate(40,385)">
+    <rect width="190" height="70" class="box-green" />
+    <text x="95" y="30" class="label-bold">one PLL</text>
+    <text x="95" y="52" class="label-sub">600 MHz</text>
+  </g>
+  <line x1="100" y1="385" x2="100" y2="328" class="conn-line" marker-end="url(#arrow)" />
+  <text x="112" y="356" class="label-sub" style="text-anchor: start">÷ 30 = 20 MHz</text>
+  <line x1="100" y1="455" x2="100" y2="512" class="conn-line" marker-end="url(#arrow)" />
+  <text x="112" y="489" class="label-sub" style="text-anchor: start">÷ 8 = 75 MHz</text>
+
+  <text x="40" y="770" class="head">Two output lines for every machine line, always</text>
+  <text x="40" y="800" class="text-left">machine line: 896 clocks of 20 MHz = 44.8 µs</text>
+  <rect x="40" y="810" width="820" height="28" class="bar-machine" />
+  <text x="40" y="870" class="text-left">output lines: 1680 clocks of 75 MHz = 22.4 µs each</text>
+  <rect x="40" y="880" width="407.0" height="28" class="bar-line" />
+  <rect x="453.0" y="880" width="407.0" height="28" class="bar-line" />
+  <text x="40" y="940" class="text-left">A frame takes 16.67 ms on both sides (372 machine lines, 744 output lines).</text>
+  <text x="40" y="962" class="text-left">The output starts a fixed time after the machine and never drifts.</text>
+
+  <text x="40" y="1002" class="text-left" style="font-size: 14px">Blue boxes are memories, yellow boxes are logic, green is the outside world.</text>
+</svg>

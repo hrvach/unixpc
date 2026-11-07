@@ -1,0 +1,308 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 765" width="100%" height="100%">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
+    </marker>
+    <marker id="arrow-write" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e8a33d" stroke="#8a5a10" stroke-width="1" />
+    </marker>
+    <marker id="arrow-read" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#3f66a2" />
+    </marker>
+    <style>
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 28px; font-weight: bold; fill: #111; text-anchor: start; }
+      .head { font-family: system-ui, -apple-system, sans-serif; font-size: 18px; font-weight: 700; fill: #111; }
+      .label-bold { font-family: system-ui, -apple-system, sans-serif; font-size: 17px; font-weight: 700; fill: #111; text-anchor: middle; }
+      .label-sub { font-family: system-ui, -apple-system, sans-serif; font-size: 15px; fill: #444; text-anchor: middle; }
+      .text-left { font-family: system-ui, -apple-system, sans-serif; font-size: 15px; fill: #555; }
+      .cell-text { font-family: system-ui, -apple-system, sans-serif; font-size: 16px; fill: #111; text-anchor: middle; }
+      .strip-text { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; font-weight: 600; fill: #333; text-anchor: middle; }
+      .slot-now { fill: #e8a33d; stroke: #8a5a10; stroke-width: 1; }
+      .slot-kept { fill: #b9cbe8; stroke: #6f86ad; stroke-width: 1; }
+      .slot-read { fill: #3f66a2; stroke: #27406b; stroke-width: 1; }
+      .slot-free { fill: #eeeeee; stroke: #bbbbbb; stroke-width: 1; }
+      .cell-even { fill: #dbe6f6; stroke: #3f66a2; stroke-width: 1.5; }
+      .cell-odd { fill: #fdeccb; stroke: #b58428; stroke-width: 1.5; }
+      .hot { stroke-width: 3.5; }
+      .wire-even { stroke: #3f66a2; stroke-width: 1.3; opacity: 0.75; }
+      .wire-odd { stroke: #b58428; stroke-width: 1.3; opacity: 0.75; }
+      .conn-line { stroke: #333333; stroke-width: 2; fill: none; }
+      .mix { fill: #ebf5eb; stroke: #2f6338; stroke-width: 2; }
+      .bank-box { fill: none; stroke: #888888; stroke-width: 1.5; stroke-dasharray: 6,5; rx: 6; }
+      .bowed-row { stroke: #2f6338; stroke-width: 6; fill: none; stroke-linecap: round; }
+      .arrow-write { stroke: #e8a33d; stroke-width: 5; fill: none; }
+      .arrow-read { stroke: #3f66a2; stroke-width: 5; fill: none; }
+      @keyframes slotcycle {
+        0.0000% { fill: #e8a33d; stroke: #8a5a10; }
+        1.5620% { fill: #e8a33d; stroke: #8a5a10; }
+        1.5625% { fill: #b9cbe8; stroke: #6f86ad; }
+        10.9370% { fill: #b9cbe8; stroke: #6f86ad; }
+        10.9375% { fill: #3f66a2; stroke: #27406b; }
+        45.3120% { fill: #3f66a2; stroke: #27406b; }
+        45.3125% { fill: #eeeeee; stroke: #bbbbbb; }
+        100.0000% { fill: #eeeeee; stroke: #bbbbbb; }
+      }
+      @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      .pointer { transform-origin: 290px 262px; animation: spin 12.8s steps(64, end) infinite; }
+      @media (prefers-reduced-motion: reduce) { .pointer, path { animation: none !important; } }
+    
+    /* Dark theme: the page behind the picture is dark on GitHub */
+    @media (prefers-color-scheme: dark) {
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 28px; font-weight: bold; fill: #e6e6e6; text-anchor: start; }
+      .head { font-family: system-ui, -apple-system, sans-serif; font-size: 18px; font-weight: 700; fill: #e6e6e6; }
+      .label-bold { font-family: system-ui, -apple-system, sans-serif; font-size: 17px; font-weight: 700; fill: #e6e6e6; text-anchor: middle; }
+      .label-sub { font-family: system-ui, -apple-system, sans-serif; font-size: 15px; fill: #c0c6cf; text-anchor: middle; }
+      .text-left { font-family: system-ui, -apple-system, sans-serif; font-size: 15px; fill: #aab; }
+      .cell-text { font-family: system-ui, -apple-system, sans-serif; font-size: 16px; fill: #e6e6e6; text-anchor: middle; }
+      .strip-text { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; font-weight: 600; fill: #cfd5de; text-anchor: middle; }
+      .slot-now { fill: #f0a33a; stroke: #f2b24d; stroke-width: 1; }
+      .slot-kept { fill: #7f9fd0; stroke: #a9bfe6; stroke-width: 1; }
+      .slot-read { fill: #3f7fd6; stroke: #7fa6e8; stroke-width: 1; }
+      .slot-free { fill: #2b3038; stroke: #4d5560; stroke-width: 1; }
+      .cell-even { fill: #25344f; stroke: #3f7fd6; stroke-width: 1.5; }
+      .cell-odd { fill: #4a3a22; stroke: #d9a24a; stroke-width: 1.5; }
+      .hot { stroke-width: 3.5; }
+      .wire-even { stroke: #3f7fd6; stroke-width: 1.3; opacity: 0.75; }
+      .wire-odd { stroke: #d9a24a; stroke-width: 1.3; opacity: 0.75; }
+      .conn-line { stroke: #cfd5de; stroke-width: 2; fill: none; }
+      .mix { fill: #1e3324; stroke: #6fae82; stroke-width: 2; }
+      .bank-box { fill: none; stroke: #8a94a3; stroke-width: 1.5; stroke-dasharray: 6,5; rx: 6; }
+      .bowed-row { stroke: #6fae82; stroke-width: 6; fill: none; stroke-linecap: round; }
+      .arrow-write { stroke: #f0a33a; stroke-width: 5; fill: none; }
+      .arrow-read { stroke: #3f7fd6; stroke-width: 5; fill: none; }
+      @keyframes slotcycle-dark {
+        0.0000% { fill: #f0a33a; stroke: #f2b24d; }
+        1.5620% { fill: #f0a33a; stroke: #f2b24d; }
+        1.5625% { fill: #7f9fd0; stroke: #a9bfe6; }
+        10.9370% { fill: #7f9fd0; stroke: #a9bfe6; }
+        10.9375% { fill: #3f7fd6; stroke: #7fa6e8; }
+        45.3120% { fill: #3f7fd6; stroke: #7fa6e8; }
+        45.3125% { fill: #2b3038; stroke: #4d5560; }
+        100.0000% { fill: #2b3038; stroke: #4d5560; }
+      }
+      @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      .pointer { transform-origin: 290px 262px; animation: spin 12.8s steps(64, end) infinite; }
+      @media (prefers-reduced-motion: reduce) { .pointer, path { animation: none !important; } }
+    
+      [style*="slotcycle"] { animation-name: slotcycle-dark !important; }
+      [fill="#111"] { fill: #e6e6e6; }
+      [stroke="#111"] { stroke: #e6e6e6; }
+      [fill="#333"] { fill: #cfd5de; }
+      [stroke="#333"] { stroke: #cfd5de; }
+      [fill="#333333"] { fill: #cfd5de; }
+      [stroke="#333333"] { stroke: #cfd5de; }
+      [fill="#444"] { fill: #c0c6cf; }
+      [stroke="#444"] { stroke: #c0c6cf; }
+      [fill="#555"] { fill: #aab; }
+      [stroke="#555"] { stroke: #aab; }
+      [fill="#888"] { fill: #8a94a3; }
+      [stroke="#888"] { stroke: #8a94a3; }
+      [fill="#888888"] { fill: #8a94a3; }
+      [stroke="#888888"] { stroke: #8a94a3; }
+      [fill="#eeeeee"] { fill: #2b3038; }
+      [stroke="#eeeeee"] { stroke: #2b3038; }
+      [fill="#bbbbbb"] { fill: #4d5560; }
+      [stroke="#bbbbbb"] { stroke: #4d5560; }
+      [fill="#b9cbe8"] { fill: #7f9fd0; }
+      [stroke="#b9cbe8"] { stroke: #7f9fd0; }
+      [fill="#6f86ad"] { fill: #a9bfe6; }
+      [stroke="#6f86ad"] { stroke: #a9bfe6; }
+      [fill="#3f66a2"] { fill: #3f7fd6; }
+      [stroke="#3f66a2"] { stroke: #3f7fd6; }
+      [fill="#27406b"] { fill: #7fa6e8; }
+      [stroke="#27406b"] { stroke: #7fa6e8; }
+      [fill="#e8a33d"] { fill: #f0a33a; }
+      [stroke="#e8a33d"] { stroke: #f0a33a; }
+      [fill="#8a5a10"] { fill: #f2b24d; }
+      [stroke="#8a5a10"] { stroke: #f2b24d; }
+      [fill="#fdeccb"] { fill: #4a3a22; }
+      [stroke="#fdeccb"] { stroke: #4a3a22; }
+      [fill="#dbe6f6"] { fill: #25344f; }
+      [stroke="#dbe6f6"] { stroke: #25344f; }
+      [fill="#ebf5eb"] { fill: #1e3324; }
+      [stroke="#ebf5eb"] { stroke: #1e3324; }
+      [fill="#2f6338"] { fill: #6fae82; }
+      [stroke="#2f6338"] { stroke: #6fae82; }
+      [fill="#b58428"] { fill: #d9a24a; }
+      [stroke="#b58428"] { stroke: #d9a24a; }
+    }
+  </style>
+  </defs>
+  <text x="40" y="48" class="title">The ring buffer</text>
+  <g>
+    <path d="M 291.1 87.0 A 175 175 0 0 1 306.1 87.7 L 300.3 150.5 A 112 112 0 0 0 290.7 150.0 Z" class="slot-now" style="animation: slotcycle 12.8s linear infinite; animation-delay: -0.0s" />
+    <path d="M 308.2 88.0 A 175 175 0 0 1 323.1 90.2 L 311.2 152.0 A 112 112 0 0 0 301.7 150.6 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -12.6s" />
+    <path d="M 325.2 90.6 A 175 175 0 0 1 339.8 94.2 L 321.9 154.6 A 112 112 0 0 0 312.5 152.3 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -12.4s" />
+    <path d="M 341.8 94.8 A 175 175 0 0 1 356.0 99.9 L 332.2 158.3 A 112 112 0 0 0 323.2 155.0 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -12.2s" />
+    <path d="M 358.0 100.7 A 175 175 0 0 1 371.6 107.2 L 342.2 162.9 A 112 112 0 0 0 333.5 158.8 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -12.0s" />
+    <path d="M 373.4 108.2 A 175 175 0 0 1 386.3 115.9 L 351.7 168.5 A 112 112 0 0 0 343.4 163.5 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -11.8s" />
+    <path d="M 388.1 117.1 A 175 175 0 0 1 400.2 126.0 L 360.5 175.0 A 112 112 0 0 0 352.8 169.3 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -11.6s" />
+    <path d="M 401.8 127.4 A 175 175 0 0 1 413.0 137.5 L 368.7 182.3 A 112 112 0 0 0 361.6 175.9 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -11.4s" />
+    <path d="M 414.5 139.0 A 175 175 0 0 1 424.6 150.2 L 376.1 190.4 A 112 112 0 0 0 369.7 183.3 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -11.2s" />
+    <path d="M 426.0 151.8 A 175 175 0 0 1 434.9 163.9 L 382.7 199.2 A 112 112 0 0 0 377.0 191.5 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -11.0s" />
+    <path d="M 436.1 165.7 A 175 175 0 0 1 443.8 178.6 L 388.5 208.6 A 112 112 0 0 0 383.5 200.3 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -10.8s" />
+    <path d="M 444.8 180.4 A 175 175 0 0 1 451.3 194.0 L 393.2 218.5 A 112 112 0 0 0 389.1 209.8 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -10.6s" />
+    <path d="M 452.1 196.0 A 175 175 0 0 1 457.2 210.2 L 397.0 228.8 A 112 112 0 0 0 393.7 219.8 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -10.4s" />
+    <path d="M 457.8 212.2 A 175 175 0 0 1 461.4 226.8 L 399.7 239.5 A 112 112 0 0 0 397.4 230.1 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -10.2s" />
+    <path d="M 461.8 228.9 A 175 175 0 0 1 464.0 243.8 L 401.4 250.3 A 112 112 0 0 0 400.0 240.8 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -10.0s" />
+    <path d="M 464.3 245.9 A 175 175 0 0 1 465.0 260.9 L 402.0 261.3 A 112 112 0 0 0 401.5 251.7 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -9.8s" />
+    <path d="M 465.0 263.1 A 175 175 0 0 1 464.3 278.1 L 401.5 272.3 A 112 112 0 0 0 402.0 262.7 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -9.6s" />
+    <path d="M 464.0 280.2 A 175 175 0 0 1 461.8 295.1 L 400.0 283.2 A 112 112 0 0 0 401.4 273.7 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -9.4s" />
+    <path d="M 461.4 297.2 A 175 175 0 0 1 457.8 311.8 L 397.4 293.9 A 112 112 0 0 0 399.7 284.5 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -9.2s" />
+    <path d="M 457.2 313.8 A 175 175 0 0 1 452.1 328.0 L 393.7 304.2 A 112 112 0 0 0 397.0 295.2 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -9.0s" />
+    <path d="M 451.3 330.0 A 175 175 0 0 1 444.8 343.6 L 389.1 314.2 A 112 112 0 0 0 393.2 305.5 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -8.8s" />
+    <path d="M 443.8 345.4 A 175 175 0 0 1 436.1 358.3 L 383.5 323.7 A 112 112 0 0 0 388.5 315.4 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -8.6s" />
+    <path d="M 434.9 360.1 A 175 175 0 0 1 426.0 372.2 L 377.0 332.5 A 112 112 0 0 0 382.7 324.8 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -8.4s" />
+    <path d="M 424.6 373.8 A 175 175 0 0 1 414.5 385.0 L 369.7 340.7 A 112 112 0 0 0 376.1 333.6 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -8.2s" />
+    <path d="M 413.0 386.5 A 175 175 0 0 1 401.8 396.6 L 361.6 348.1 A 112 112 0 0 0 368.7 341.7 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -8.0s" />
+    <path d="M 400.2 398.0 A 175 175 0 0 1 388.1 406.9 L 352.8 354.7 A 112 112 0 0 0 360.5 349.0 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -7.8s" />
+    <path d="M 386.3 408.1 A 175 175 0 0 1 373.4 415.8 L 343.4 360.5 A 112 112 0 0 0 351.7 355.5 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -7.6s" />
+    <path d="M 371.6 416.8 A 175 175 0 0 1 358.0 423.3 L 333.5 365.2 A 112 112 0 0 0 342.2 361.1 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -7.4s" />
+    <path d="M 356.0 424.1 A 175 175 0 0 1 341.8 429.2 L 323.2 369.0 A 112 112 0 0 0 332.2 365.7 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -7.2s" />
+    <path d="M 339.8 429.8 A 175 175 0 0 1 325.2 433.4 L 312.5 371.7 A 112 112 0 0 0 321.9 369.4 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -7.0s" />
+    <path d="M 323.1 433.8 A 175 175 0 0 1 308.2 436.0 L 301.7 373.4 A 112 112 0 0 0 311.2 372.0 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -6.8s" />
+    <path d="M 306.1 436.3 A 175 175 0 0 1 291.1 437.0 L 290.7 374.0 A 112 112 0 0 0 300.3 373.5 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -6.6s" />
+    <path d="M 288.9 437.0 A 175 175 0 0 1 273.9 436.3 L 279.7 373.5 A 112 112 0 0 0 289.3 374.0 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -6.4s" />
+    <path d="M 271.8 436.0 A 175 175 0 0 1 256.9 433.8 L 268.8 372.0 A 112 112 0 0 0 278.3 373.4 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -6.2s" />
+    <path d="M 254.8 433.4 A 175 175 0 0 1 240.2 429.8 L 258.1 369.4 A 112 112 0 0 0 267.5 371.7 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -6.0s" />
+    <path d="M 238.2 429.2 A 175 175 0 0 1 224.0 424.1 L 247.8 365.7 A 112 112 0 0 0 256.8 369.0 Z" class="slot-free" style="animation: slotcycle 12.8s linear infinite; animation-delay: -5.8s" />
+    <path d="M 222.0 423.3 A 175 175 0 0 1 208.4 416.8 L 237.8 361.1 A 112 112 0 0 0 246.5 365.2 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -5.6s" />
+    <path d="M 206.6 415.8 A 175 175 0 0 1 193.7 408.1 L 228.3 355.5 A 112 112 0 0 0 236.6 360.5 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -5.4s" />
+    <path d="M 191.9 406.9 A 175 175 0 0 1 179.8 398.0 L 219.5 349.0 A 112 112 0 0 0 227.2 354.7 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -5.2s" />
+    <path d="M 178.2 396.6 A 175 175 0 0 1 167.0 386.5 L 211.3 341.7 A 112 112 0 0 0 218.4 348.1 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -5.0s" />
+    <path d="M 165.5 385.0 A 175 175 0 0 1 155.4 373.8 L 203.9 333.6 A 112 112 0 0 0 210.3 340.7 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -4.8s" />
+    <path d="M 154.0 372.2 A 175 175 0 0 1 145.1 360.1 L 197.3 324.8 A 112 112 0 0 0 203.0 332.5 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -4.6s" />
+    <path d="M 143.9 358.3 A 175 175 0 0 1 136.2 345.4 L 191.5 315.4 A 112 112 0 0 0 196.5 323.7 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -4.4s" />
+    <path d="M 135.2 343.6 A 175 175 0 0 1 128.7 330.0 L 186.8 305.5 A 112 112 0 0 0 190.9 314.2 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -4.2s" />
+    <path d="M 127.9 328.0 A 175 175 0 0 1 122.8 313.8 L 183.0 295.2 A 112 112 0 0 0 186.3 304.2 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -4.0s" />
+    <path d="M 122.2 311.8 A 175 175 0 0 1 118.6 297.2 L 180.3 284.5 A 112 112 0 0 0 182.6 293.9 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -3.8s" />
+    <path d="M 118.2 295.1 A 175 175 0 0 1 116.0 280.2 L 178.6 273.7 A 112 112 0 0 0 180.0 283.2 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -3.6s" />
+    <path d="M 115.7 278.1 A 175 175 0 0 1 115.0 263.1 L 178.0 262.7 A 112 112 0 0 0 178.5 272.3 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -3.4s" />
+    <path d="M 115.0 260.9 A 175 175 0 0 1 115.7 245.9 L 178.5 251.7 A 112 112 0 0 0 178.0 261.3 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -3.2s" />
+    <path d="M 116.0 243.8 A 175 175 0 0 1 118.2 228.9 L 180.0 240.8 A 112 112 0 0 0 178.6 250.3 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -3.0s" />
+    <path d="M 118.6 226.8 A 175 175 0 0 1 122.2 212.2 L 182.6 230.1 A 112 112 0 0 0 180.3 239.5 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -2.8s" />
+    <path d="M 122.8 210.2 A 175 175 0 0 1 127.9 196.0 L 186.3 219.8 A 112 112 0 0 0 183.0 228.8 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -2.6s" />
+    <path d="M 128.7 194.0 A 175 175 0 0 1 135.2 180.4 L 190.9 209.8 A 112 112 0 0 0 186.8 218.5 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -2.4s" />
+    <path d="M 136.2 178.6 A 175 175 0 0 1 143.9 165.7 L 196.5 200.3 A 112 112 0 0 0 191.5 208.6 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -2.2s" />
+    <path d="M 145.1 163.9 A 175 175 0 0 1 154.0 151.8 L 203.0 191.5 A 112 112 0 0 0 197.3 199.2 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -2.0s" />
+    <path d="M 155.4 150.2 A 175 175 0 0 1 165.5 139.0 L 210.3 183.3 A 112 112 0 0 0 203.9 190.4 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -1.8s" />
+    <path d="M 167.0 137.5 A 175 175 0 0 1 178.2 127.4 L 218.4 175.9 A 112 112 0 0 0 211.3 182.3 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -1.6s" />
+    <path d="M 179.8 126.0 A 175 175 0 0 1 191.9 117.1 L 227.2 169.3 A 112 112 0 0 0 219.5 175.0 Z" class="slot-read" style="animation: slotcycle 12.8s linear infinite; animation-delay: -1.4s" />
+    <path d="M 193.7 115.9 A 175 175 0 0 1 206.6 108.2 L 236.6 163.5 A 112 112 0 0 0 228.3 168.5 Z" class="slot-kept" style="animation: slotcycle 12.8s linear infinite; animation-delay: -1.2s" />
+    <path d="M 208.4 107.2 A 175 175 0 0 1 222.0 100.7 L 246.5 158.8 A 112 112 0 0 0 237.8 162.9 Z" class="slot-kept" style="animation: slotcycle 12.8s linear infinite; animation-delay: -1.0s" />
+    <path d="M 224.0 99.9 A 175 175 0 0 1 238.2 94.8 L 256.8 155.0 A 112 112 0 0 0 247.8 158.3 Z" class="slot-kept" style="animation: slotcycle 12.8s linear infinite; animation-delay: -0.8s" />
+    <path d="M 240.2 94.2 A 175 175 0 0 1 254.8 90.6 L 267.5 152.3 A 112 112 0 0 0 258.1 154.6 Z" class="slot-kept" style="animation: slotcycle 12.8s linear infinite; animation-delay: -0.6s" />
+    <path d="M 256.9 90.2 A 175 175 0 0 1 271.8 88.0 L 278.3 150.6 A 112 112 0 0 0 268.8 152.0 Z" class="slot-kept" style="animation: slotcycle 12.8s linear infinite; animation-delay: -0.4s" />
+    <path d="M 273.9 87.7 A 175 175 0 0 1 288.9 87.0 L 289.3 150.0 A 112 112 0 0 0 279.7 150.5 Z" class="slot-kept" style="animation: slotcycle 12.8s linear infinite; animation-delay: -0.2s" />
+  </g>
+  <text x="290" y="236" class="label-bold">64 slots</text>
+  <text x="290" y="258" class="label-sub">one picture line each</text>
+  <text x="290" y="278" class="label-sub">line n goes to slot n mod 64</text>
+  <text x="290" y="298" class="label-sub">64 KB in all</text>
+  <g class="pointer">
+    <line x1="300.6" y1="45.3" x2="298.7" y2="83.2" class="arrow-write" marker-end="url(#arrow-write)" />
+  </g>
+  <g class="pointer">
+    <line x1="74.0" y1="283.3" x2="111.9" y2="279.6" class="arrow-read" marker-end="url(#arrow-read)" />
+  </g>
+
+  <g transform="translate(540,92)">
+    <rect width="18" height="18" class="slot-now" /><text x="30" y="15" class="text-left">being written by the machine</text>
+    <text x="30" y="35" class="text-left">(the orange arrow)</text>
+    <rect y="62" width="18" height="18" class="slot-kept" /><text x="30" y="77" class="text-left">written, not drawn yet</text>
+    <rect y="102" width="18" height="18" class="slot-read" /><text x="30" y="117" class="text-left">being drawn by the output (the blue</text>
+    <text x="30" y="137" class="text-left">arrow): a bowed row reaches up to</text>
+    <text x="30" y="157" class="text-left">10 lines either side</text>
+    <rect y="192" width="18" height="18" class="slot-free" /><text x="30" y="207" class="text-left">already drawn, free to be</text>
+    <text x="30" y="227" class="text-left">overwritten</text>
+  </g>
+
+  <text x="540" y="350" class="head" style="font-size:16px">Why a buffer, not a pipe?</text>
+  <rect x="540" y="362" width="320" height="8" class="slot-free" />
+  <rect x="540" y="374" width="320" height="8" class="slot-free" />
+  <rect x="540" y="386" width="320" height="8" class="slot-free" />
+  <rect x="540" y="398" width="320" height="8" class="slot-read" />
+  <rect x="540" y="410" width="320" height="8" class="slot-read" />
+  <rect x="540" y="422" width="320" height="8" class="slot-read" />
+  <rect x="540" y="434" width="320" height="8" class="slot-read" />
+  <rect x="540" y="446" width="320" height="8" class="slot-read" />
+  <rect x="540" y="458" width="320" height="8" class="slot-read" />
+  <rect x="540" y="470" width="320" height="8" class="slot-read" />
+  <rect x="540" y="482" width="320" height="8" class="slot-free" />
+  <path d="M 540 484 Q 700 316 860 484" class="bowed-row" />
+  <text x="540" y="514" class="text-left">A bowed row crosses up to 10 lines</text>
+  <text x="540" y="534" class="text-left">either side: all in memory at once.</text>
+
+  <text x="40" y="582" class="head">The life of one slot</text>
+  <rect x="40.00" y="600" width="12.01" height="30" class="slot-now" />
+  <rect x="52.81" y="600" width="12.01" height="30" class="slot-kept" />
+  <rect x="65.62" y="600" width="12.01" height="30" class="slot-kept" />
+  <rect x="78.44" y="600" width="12.01" height="30" class="slot-kept" />
+  <rect x="91.25" y="600" width="12.01" height="30" class="slot-kept" />
+  <rect x="104.06" y="600" width="12.01" height="30" class="slot-kept" />
+  <rect x="116.88" y="600" width="12.01" height="30" class="slot-kept" />
+  <rect x="129.69" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="142.50" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="155.31" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="168.12" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="180.94" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="193.75" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="206.56" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="219.38" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="232.19" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="245.00" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="257.81" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="270.62" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="283.44" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="296.25" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="309.06" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="321.88" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="334.69" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="347.50" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="360.31" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="373.12" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="385.94" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="398.75" y="600" width="12.01" height="30" class="slot-read" />
+  <rect x="411.56" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="424.38" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="437.19" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="450.00" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="462.81" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="475.62" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="488.44" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="501.25" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="514.06" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="526.88" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="539.69" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="552.50" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="565.31" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="578.12" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="590.94" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="603.75" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="616.56" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="629.38" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="642.19" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="655.00" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="667.81" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="680.62" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="693.44" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="706.25" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="719.06" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="731.88" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="744.69" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="757.50" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="770.31" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="783.12" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="795.94" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="808.75" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="821.56" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="834.38" y="600" width="12.01" height="30" class="slot-free" />
+  <rect x="847.19" y="600" width="12.01" height="30" class="slot-free" />
+  <text x="264.2" y="620" class="strip-text" style="fill:#fff">being drawn: up to 22 lines</text>
+  <text x="635.8" y="620" class="strip-text">free until the writer comes round again</text>
+  <text x="40" y="652" class="text-left">written, then waiting</text>
+  <text x="40" y="684" class="text-left">A slot lives for 64 machine lines = 2.9 ms, and the output needs it for at most about 22 of them. The rest is slack,</text>
+  <text x="40" y="704" class="text-left">so the writer never catches up with the reader. (One line takes 44.8 µs; in the animation a step takes 0.2 s.)</text>
+  <text x="40" y="724" class="text-left">The ring is sized for the strongest bend the module supports (10 lines either side).</text>
+  <text x="40" y="744" class="text-left">The board uses k = 1/32 (about 3 %), so in practice fewer slots are being drawn at once.</text>
+</svg>

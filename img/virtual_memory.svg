@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 20px; font-weight: bold; fill: #111; text-anchor: middle; }
+      .head { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; font-weight: 700; fill: #111; text-anchor: middle; }
+      .sub { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; fill: #555; text-anchor: middle; }
+      .note { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; fill: #333; text-anchor: middle; }
+      .hex { font-family: ui-monospace, Menlo, Consolas, monospace; }
+      .row { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 15px; fill: #111; }
+      .rowhead { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; fill: #555; }
+      .page { fill: #8a5a00; font-weight: bold; }
+      .flag { fill: #3f66a2; font-weight: bold; }
+      .bitlabel { font-family: system-ui, -apple-system, sans-serif; font-size: 10px; fill: #333; text-anchor: middle; }
+      .bitval { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; fill: #111; text-anchor: middle; }
+      .tblhead { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; font-weight: 700; fill: #111; }
+      .tblbits { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; fill: #111; }
+      .tbltext { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; fill: #333; }
+      .tblrule { stroke: #999; stroke-width: 1; }
+      .legend { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 11px; fill: #333; }
+      .offs { fill: #2f6338; font-weight: bold; }
+      .box-blue { fill: #eaf0f9; stroke: #3f66a2; stroke-width: 2; }
+      .box-yellow { fill: #fdf4de; stroke: #b58428; stroke-width: 2; }
+      .box-green { fill: #ebf5eb; stroke: #2f6338; stroke-width: 2; }
+      .hl { fill: #fdf4de; stroke: #b58428; stroke-width: 1.5; }
+      .cell-flag { fill: #eaf0f9; stroke: #3f66a2; }
+      .cell-rsv { fill: #f2f2f2; stroke: #999; }
+      .cell-page { fill: #fdf4de; stroke: #b58428; }
+      .lane { fill: none; stroke: #9aa; stroke-width: 2; stroke-dasharray: 6 6; }
+      /* Dark theme: GitHub and other dark viewers show the SVG on a dark page, so the colours change with it */
+      @media (prefers-color-scheme: dark) {
+        .title, .head, .row, .tblhead, .tblbits, .bitval, .hex { fill: #e6e6e6; }
+        .sub, .rowhead, .tbltext, .note, .bitlabel, .legend { fill: #aab; }
+        .page { fill: #e8ad4f; }
+        .offs { fill: #7fcf95; }
+        .flag { fill: #8fb4ea; }
+        .box-blue { fill: #1d2a3d; stroke: #6f93d0; }
+        .box-yellow { fill: #3a3018; stroke: #d4a24a; }
+        .box-green { fill: #1f3425; stroke: #6fae82; }
+        .hl { fill: #3a3018; stroke: #d4a24a; }
+        .lane { stroke: #778; }
+        .tblrule { stroke: #666; }
+        .cell-flag { fill: #1d2a3d; stroke: #6f93d0; }
+        .cell-rsv { fill: #2a2a2a; stroke: #777; }
+        .cell-page { fill: #3a3018; stroke: #d4a24a; }
+      }
+    </style>
+  </defs>
+
+  <text x="450" y="34" class="title">How the MMU translates an address</text>
+
+  <!-- Logical address -->
+  <rect x="30" y="60" width="240" height="240" rx="8" class="box-blue" />
+  <text x="150" y="86" class="head">logical address (CPU)</text>
+  <text x="80" y="128" class="sub">page</text>
+  <text x="130" y="128" class="sub">offset</text>
+  <!-- The original address stays put; the moving copies are drawn over it -->
+  <text x="60" y="152" font-size="22" class="hex page" opacity="0.3">0A5</text>
+  <text x="110" y="152" font-size="22" class="hex offs" opacity="0.3">C34</text>
+
+  <!-- Page map -->
+  <rect x="320" y="60" width="260" height="240" rx="8" class="box-yellow" />
+  <text x="450" y="86" class="head">page map (MMU RAM)</text>
+  <text x="338" y="118" class="rowhead">page</text>
+  <text x="420" y="118" class="rowhead">entry</text>
+  <rect x="326" y="165" width="248" height="22" rx="3" class="hl" opacity="0"><animate attributeName="opacity" dur="8s" repeatCount="indefinite" calcMode="spline" keyTimes="0.0000;0.3000;0.3250;0.9000;0.9750;1.0000" values="0;0;1;1;0;0" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"/></rect>
+  <text x="338" y="150" class="row">0A4</text>
+  <text x="420" y="150" class="row">C0F1</text>
+  <text x="338" y="180" class="row" opacity="0">0A5<animate attributeName="opacity" dur="8s" repeatCount="indefinite" calcMode="spline" keyTimes="0.0000;0.3500;0.3625;0.9000;0.9750;1.0000" values="0;0;1;1;0;0" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"/></text>
+  <text x="420" y="180" class="row flag">E</text>
+  <text x="429" y="180" class="row page">02C</text>
+  <text x="338" y="210" class="row">0A6</text>
+  <text x="420" y="210" class="row">0000</text>
+  <rect x="328" y="231" width="66" height="22" rx="3" class="hl"><animate attributeName="opacity" dur="8s" repeatCount="indefinite" calcMode="spline" keyTimes="0.0000;0.6250;0.6750;0.9000;0.9750;1.0000" values="0;0;1;1;0;0" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"/></rect>
+  <text x="333.5" y="230" class="bitlabel">WE</text>
+  <text x="368.0" y="230" class="bitlabel">status</text>
+  <text x="481.0" y="230" class="bitlabel">physical page</text>
+  <rect x="332" y="234" width="13" height="16" rx="2" class="cell cell-flag" stroke-width="1"/>
+  <text x="338.5" y="246" class="bitval">1</text>
+  <rect x="347" y="234" width="13" height="16" rx="2" class="cell cell-flag" stroke-width="1"/>
+  <text x="353.5" y="246" class="bitval">1</text>
+  <rect x="362" y="234" width="13" height="16" rx="2" class="cell cell-flag" stroke-width="1"/>
+  <text x="368.5" y="246" class="bitval">1</text>
+  <rect x="377" y="234" width="13" height="16" rx="2" class="cell cell-rsv" stroke-width="1"/>
+  <text x="383.5" y="246" class="bitval">0</text>
+  <rect x="392" y="234" width="13" height="16" rx="2" class="cell cell-page" stroke-width="1"/>
+  <text x="398.5" y="246" class="bitval">0</text>
+  <rect x="407" y="234" width="13" height="16" rx="2" class="cell cell-page" stroke-width="1"/>
+  <text x="413.5" y="246" class="bitval">0</text>
+  <rect x="422" y="234" width="13" height="16" rx="2" class="cell cell-page" stroke-width="1"/>
+  <text x="428.5" y="246" class="bitval">0</text>
+  <rect x="437" y="234" width="13" height="16" rx="2" class="cell cell-page" stroke-width="1"/>
+  <text x="443.5" y="246" class="bitval">0</text>
+  <rect x="452" y="234" width="13" height="16" rx="2" class="cell cell-page" stroke-width="1"/>
+  <text x="458.5" y="246" class="bitval">0</text>
+  <rect x="467" y="234" width="13" height="16" rx="2" class="cell cell-page" stroke-width="1"/>
+  <text x="473.5" y="246" class="bitval">0</text>
+  <rect x="482" y="234" width="13" height="16" rx="2" class="cell cell-page" stroke-width="1"/>
+  <text x="488.5" y="246" class="bitval">1</text>
+  <rect x="497" y="234" width="13" height="16" rx="2" class="cell cell-page" stroke-width="1"/>
+  <text x="503.5" y="246" class="bitval">0</text>
+  <rect x="512" y="234" width="13" height="16" rx="2" class="cell cell-page" stroke-width="1"/>
+  <text x="518.5" y="246" class="bitval">1</text>
+  <rect x="527" y="234" width="13" height="16" rx="2" class="cell cell-page" stroke-width="1"/>
+  <text x="533.5" y="246" class="bitval">1</text>
+  <rect x="542" y="234" width="13" height="16" rx="2" class="cell cell-page" stroke-width="1"/>
+  <text x="548.5" y="246" class="bitval">0</text>
+  <rect x="557" y="234" width="13" height="16" rx="2" class="cell cell-page" stroke-width="1"/>
+  <text x="563.5" y="246" class="bitval">0</text>
+  <text x="332" y="272" class="legend">1110 = E: write enabled, dirty</text>
+
+  <!-- Physical address -->
+  <rect x="630" y="60" width="240" height="240" rx="8" class="box-green" />
+  <text x="750" y="86" class="head">physical address (RAM)</text>
+  <text x="670" y="128" class="sub">page</text>
+  <text x="740" y="128" class="sub">offset</text>
+
+  <!-- The route the offset takes: it is never translated -->
+  <path d="M110,152 V330 H720 V152" class="lane" />
+  <text x="415" y="352" class="sub">the offset passes through unchanged</text>
+
+  <!-- Moving parts -->
+  <text class="hex page" x="60" y="152" font-size="22">0A5<animate attributeName="x" dur="8s" repeatCount="indefinite" calcMode="spline" keyTimes="0.0000;0.1000;0.3500;1.0000" values="60;60;338;338" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"/><animate attributeName="y" dur="8s" repeatCount="indefinite" calcMode="spline" keyTimes="0.0000;0.1000;0.3500;1.0000" values="152;152;180;180" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"/><animate attributeName="font-size" dur="8s" repeatCount="indefinite" calcMode="spline" keyTimes="0.0000;0.1000;0.3500;1.0000" values="22;22;15;15" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"/><animate attributeName="opacity" dur="8s" repeatCount="indefinite" calcMode="spline" keyTimes="0.0000;0.0500;0.9000;0.9750;1.0000" values="0;1;1;0;0" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"/></text>
+  <text class="hex offs" x="110" y="152" font-size="22" opacity="0">C34<animateMotion dur="8s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0.0000;0.5000;0.8500;1.0000" path="M0,0 V178 H610 V0"/><animate attributeName="opacity" dur="8s" repeatCount="indefinite" calcMode="spline" keyTimes="0.0000;0.0500;0.9000;0.9750;1.0000" values="0;1;1;0;0" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"/></text>
+  <text class="hex page" x="436" y="180" font-size="15" opacity="0">02C<animate attributeName="x" dur="8s" repeatCount="indefinite" calcMode="spline" keyTimes="0.0000;0.4000;0.6000;1.0000" values="436;436;650;650" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"/><animate attributeName="y" dur="8s" repeatCount="indefinite" calcMode="spline" keyTimes="0.0000;0.4000;0.6000;1.0000" values="180;180;152;152" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"/><animate attributeName="font-size" dur="8s" repeatCount="indefinite" calcMode="spline" keyTimes="0.0000;0.4000;0.6000;1.0000" values="15;15;22;22" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"/><animate attributeName="opacity" dur="8s" repeatCount="indefinite" calcMode="spline" keyTimes="0.0000;0.4000;0.4125;0.9000;0.9750;1.0000" values="0;0;1;1;0;0" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"/></text>
+  <text class="hex flag" x="420" y="180" font-size="15" opacity="0">E<animate attributeName="x" dur="8s" repeatCount="indefinite" calcMode="spline" keyTimes="0.0000;0.4000;0.6000;1.0000" values="420;420;334;334" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"/><animate attributeName="y" dur="8s" repeatCount="indefinite" calcMode="spline" keyTimes="0.0000;0.4000;0.6000;1.0000" values="180;180;240;240" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"/><animate attributeName="opacity" dur="8s" repeatCount="indefinite" calcMode="spline" keyTimes="0.0000;0.4000;0.4125;0.6000;0.6750;1.0000" values="0;0;1;1;0;0" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"/></text>
+
+  <text x="150" y="372" class="tblhead">WE PS1 PS0</text>
+  <text x="260" y="372" class="tblhead">digit</text>
+  <text x="320" y="372" class="tblhead">meaning</text>
+  <line x1="150" y1="378" x2="750" y2="378" class="tblrule"/>
+  <text x="150" y="396" class="tblbits">0 00</text>
+  <text x="260" y="396" class="tblbits">0</text>
+  <text x="320" y="396" class="tbltext">not present: the page has to be read from disk</text>
+  <text x="150" y="414" class="tblbits">0 01</text>
+  <text x="260" y="414" class="tblbits">2</text>
+  <text x="320" y="414" class="tbltext">present, not write-enabled</text>
+  <text x="150" y="432" class="tblbits">1 01</text>
+  <text x="260" y="432" class="tblbits">A</text>
+  <text x="320" y="432" class="tbltext">present, not read yet</text>
+  <text x="150" y="450" class="tblbits">1 10</text>
+  <text x="260" y="450" class="tblbits">C</text>
+  <text x="320" y="450" class="tbltext">present, read, not written</text>
+  <text x="150" y="468" class="tblbits">1 11</text>
+  <text x="260" y="468" class="tblbits">E</text>
+  <text x="320" y="468" class="tbltext">present, dirty: save to disk before reuse</text>
+  <text x="450" y="496" class="note">Bits A21-A12 pick the page through the page map. Bits A11-A0 skip it.</text>
+  <text x="450" y="516" class="sub">The MMU only translates the lower 4 MB; addresses above that go straight to the bus.</text>
+</svg>

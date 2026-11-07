@@ -1,0 +1,190 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 650" width="100%" height="100%">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
+    </marker>
+    
+    <style>
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 24px; font-weight: bold; fill: #111; text-anchor: middle; }
+      .label-bold { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; font-weight: 700; fill: #111; text-anchor: middle; }
+      .label-sub { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; fill: #444; text-anchor: middle; }
+      .text-left { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; fill: #555; }
+      .bus-text { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; font-weight: bold; fill: #111; text-anchor: middle; }
+      
+      .box-green { fill: #ebf5eb; stroke: #2f6338; stroke-width: 2; rx: 6; }
+      .box-yellow { fill: #fdf4de; stroke: #b58428; stroke-width: 2; rx: 6; }
+      .box-blue { fill: #eaf0f9; stroke: #3f66a2; stroke-width: 2; rx: 6; }
+      .bus-box { fill: #f0f0f0; stroke: #555555; stroke-width: 1.5; rx: 4; }
+      .dashed-box { fill: transparent; stroke: #888888; stroke-width: 1.5; stroke-dasharray: 6,6; rx: 8; }
+      .conn-line { stroke: #333333; stroke-width: 2; fill: none; }
+    
+    /* Dark theme: the page behind the picture is dark on GitHub, so the colours follow it */
+    @media (prefers-color-scheme: dark) {
+      [fill="#111"] { fill: #e6e6e6 !important; }
+      [style*="fill:#111"] { fill: #e6e6e6 !important; }
+      [style*="fill: #111"] { fill: #e6e6e6 !important; }
+      [fill="#333333"] { fill: #aab !important; }
+      [style*="fill:#333333"] { fill: #aab !important; }
+      [style*="fill: #333333"] { fill: #aab !important; }
+      [fill="#444"] { fill: #aab !important; }
+      [style*="fill:#444"] { fill: #aab !important; }
+      [style*="fill: #444"] { fill: #aab !important; }
+      [fill="#555"] { fill: #aab !important; }
+      [style*="fill:#555"] { fill: #aab !important; }
+      [style*="fill: #555"] { fill: #aab !important; }
+      [fill="#eaf0f9"] { fill: #4b4f56 !important; }
+      [style*="fill:#eaf0f9"] { fill: #4b4f56 !important; }
+      [style*="fill: #eaf0f9"] { fill: #4b4f56 !important; }
+      [fill="#ebf5eb"] { fill: #4b5152 !important; }
+      [style*="fill:#ebf5eb"] { fill: #4b5152 !important; }
+      [style*="fill: #ebf5eb"] { fill: #4b5152 !important; }
+      [fill="#f0f0f0"] { fill: #4d4f54 !important; }
+      [style*="fill:#f0f0f0"] { fill: #4d4f54 !important; }
+      [style*="fill: #f0f0f0"] { fill: #4d4f54 !important; }
+      [fill="#fdf4de"] { fill: #50514f !important; }
+      [style*="fill:#fdf4de"] { fill: #50514f !important; }
+      [style*="fill: #fdf4de"] { fill: #50514f !important; }
+      [stroke="#333333"] { stroke: #9aa !important; }
+      [style*="stroke:#333333"] { stroke: #9aa !important; }
+      [style*="stroke: #333333"] { stroke: #9aa !important; }
+      [stroke="#555555"] { stroke: #9aa !important; }
+      [style*="stroke:#555555"] { stroke: #9aa !important; }
+      [style*="stroke: #555555"] { stroke: #9aa !important; }
+      .title { fill: #e6e6e6 !important; }
+      .label-bold { fill: #e6e6e6 !important; }
+      .label-sub { fill: #aab !important; }
+      .text-left { fill: #aab !important; }
+      .bus-text { fill: #e6e6e6 !important; }
+      .box-green { fill: #4b5152 !important; }
+      .box-yellow { fill: #50514f !important; }
+      .box-blue { fill: #4b4f56 !important; }
+      .bus-box { fill: #4d4f54 !important; stroke: #9aa !important; }
+      .conn-line { stroke: #9aa !important; }
+    }
+  </style>
+  </defs>
+
+  <!-- Main Title -->
+  <text x="500" y="50" class="title">The UNIX PC logic board</text>
+
+  <!-- Outer Dashed Boundary -->
+  <rect x="25" y="90" width="940" height="340" class="dashed-box" />
+  <text x="40" y="115" class="text-left">inside the FPGA</text>
+
+  <!-- Bottom Legend -->
+  <text x="35" y="580" class="text-left">Everything inside the dashed line is logic. Blue boxes are memories and the outside world.</text>
+
+  <!-- Top Row Connectors -->
+  <line x1="180" y1="165" x2="250" y2="165" class="conn-line" marker-end="url(#arrow)" />
+  <text x="215" y="155" class="label-sub" style="font-weight: 500;">logical</text>
+
+  <!-- Physical addresses (I/O, boot ROM) go straight to the bus, not through the MMU -->
+  <line x1="112" y1="200" x2="112" y2="240" class="conn-line" />
+  <text x="122" y="226" class="label-sub" style="font-weight: 500; text-anchor: start;">physical (I/O, ROM)</text>
+
+  <line x1="330" y1="200" x2="330" y2="240" class="conn-line" />
+  <line x1="560" y1="200" x2="560" y2="240" class="conn-line" />
+
+  <!-- Middle Row Connectors to Bus -->
+  <line x1="105" y1="270" x2="105" y2="310" class="conn-line" />
+  <line x1="260" y1="270" x2="260" y2="310" class="conn-line" />
+  <line x1="415" y1="270" x2="415" y2="310" class="conn-line" />
+  <line x1="570" y1="270" x2="570" y2="310" class="conn-line" />
+  <line x1="730" y1="270" x2="730" y2="310" class="conn-line" />
+  <line x1="885" y1="270" x2="885" y2="310" class="conn-line" />
+
+  <!-- Bottom Row Connectors (Out of Bus) -->
+  <line x1="105" y1="390" x2="105" y2="465" class="conn-line" marker-end="url(#arrow)" />
+  <line x1="260" y1="390" x2="260" y2="465" class="conn-line" marker-end="url(#arrow)" />
+  <line x1="415" y1="390" x2="415" y2="465" class="conn-line" marker-end="url(#arrow)" />
+  <line x1="570" y1="390" x2="570" y2="465" class="conn-line" marker-end="url(#arrow)" />
+  <line x1="730" y1="390" x2="730" y2="465" class="conn-line" marker-end="url(#arrow)" />
+  <line x1="885" y1="390" x2="885" y2="465" class="conn-line" marker-end="url(#arrow)" />
+
+  <!-- Nodes & Text -->
+
+  <!-- Top Row -->
+  <g transform="translate(45, 130)">
+    <rect width="135" height="70" class="box-green" />
+    <text x="67.5" y="30" class="label-bold">68010 CPU</text>
+    <text x="67.5" y="50" class="label-sub">10 MHz</text>
+  </g>
+
+  <g transform="translate(260, 130)">
+    <rect width="160" height="70" class="box-yellow" />
+    <text x="80" y="30" class="label-bold">MMU</text>
+    <text x="80" y="50" class="label-sub">RAM range only</text>
+  </g>
+
+  <g transform="translate(475, 130)">
+    <rect width="160" height="70" class="box-blue" />
+    <text x="80" y="30" class="label-bold">Boot ROM</text>
+    <text x="80" y="50" class="label-sub">16 KB</text>
+  </g>
+
+  <!-- Horizontal Bus -->
+  <g transform="translate(45, 240)">
+    <rect width="895" height="30" class="bus-box" />
+    <text x="447.5" y="20" class="bus-text">the bus (arbiter: CPU or DMA)</text>
+  </g>
+
+  <!-- Middle Row -->
+  <g transform="translate(45, 310)">
+    <rect width="135" height="80" class="box-blue" />
+    <text x="67.5" y="35" class="label-bold">Video RAM</text>
+    <text x="67.5" y="55" class="label-sub">32 KB bitmap</text>
+  </g>
+
+  <g transform="translate(200, 310)">
+    <rect width="135" height="80" class="box-blue" />
+    <text x="67.5" y="35" class="label-bold">RAM interface</text>
+    <text x="67.5" y="55" class="label-sub">to the SDRAM</text>
+  </g>
+
+  <g transform="translate(355, 310)">
+    <rect width="135" height="80" class="box-yellow" />
+    <text x="67.5" y="27" class="label-bold">Disk + DMA</text>
+    <text x="67.5" y="47" class="label-sub">WD1010, WD2797</text>
+    <text x="67.5" y="65" class="label-sub">DMA chips</text>
+  </g>
+
+  <g transform="translate(510, 310)">
+    <rect width="135" height="80" class="box-green" />
+    <text x="67.5" y="27" class="label-bold">Serial, phone</text>
+    <text x="67.5" y="47" class="label-sub">uPD7201, modem</text>
+    <text x="67.5" y="65" class="label-sub">dialer</text>
+  </g>
+
+  <g transform="translate(665, 310)">
+    <rect width="135" height="80" class="box-green" />
+    <text x="67.5" y="27" class="label-bold">Keyboard etc.</text>
+    <text x="67.5" y="47" class="label-sub">6850, clock</text>
+    <text x="67.5" y="65" class="label-sub">printer</text>
+  </g>
+
+  <g transform="translate(820, 310)">
+    <rect width="135" height="80" class="box-yellow" />
+    <text x="67.5" y="35" class="label-bold">Ethernet card</text>
+    <text x="67.5" y="55" class="label-sub">LANCE</text>
+  </g>
+
+  <!-- Bottom Row -->
+  <g transform="translate(45, 475)">
+    <rect width="135" height="80" class="box-blue" />
+    <text x="67.5" y="35" class="label-bold">HDMI</text>
+    <text x="67.5" y="55" class="label-sub">picture + sound</text>
+  </g>
+
+  <g transform="translate(200, 475)">
+    <rect width="135" height="80" class="box-blue" />
+    <text x="67.5" y="27" class="label-bold">SDRAM</text>
+    <text x="67.5" y="47" class="label-sub">add-on board</text>
+    <text x="67.5" y="65" class="label-sub">main RAM</text>
+  </g>
+
+  <g transform="translate(355, 475)">
+    <rect width="600" height="80" class="box-blue" />
+    <text x="300" y="35" class="label-bold">The ARM side of the MiSTer (Linux)</text>
+    <text x="300" y="55" class="label-sub">disk images from the SD card, keyboard, UART / MidiLink, Ethernet port</text>
+  </g>
+</svg>

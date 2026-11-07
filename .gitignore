@@ -1,0 +1,24 @@
+# Quartus build output
+/db/
+/incremental_db/
+/output_files/
+/greybox_tmp/
+/hps_isw_handoff/
+/build/
+*.rpt
+*.summary
+*.smsg
+*.done
+*.jdi
+*.pin
+*.sof
+*.pof
+*.qws
+*.bak
+
+# Simulation and editor leftovers
+__pycache__/
+*.vcd
+*.fst
+*.log
+.qbuild_runid*
