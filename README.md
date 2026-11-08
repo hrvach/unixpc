@@ -391,6 +391,26 @@ This creates alternating bands of clean and grainy areas that form visible rings
 | Sound volume, Call sounds, Modem sound | what comes out of the HDMI audio |
 | Tear off paper, Reset | clear the printout, reset the machine |
 
+## Demos
+
+Even toasters can run Linux, so why wouldn't this? Getting it to boot and support the MMU, interrupts, clock, and console was tricky. I picked an elegant weapon for a more civilized age, kernel 2.6.25, since its memory requirements actually fit the machine.
+
+The effort was mostly met with my foul-mouthed references to a widespread assumption that every 68k is a 68020. The m68k port is full of instructions the 3B1 CPU has never heard of: bitfield operations, 32-bit multiply and divide (sigh), long branches the assembler quietly generates, even unaligned reads that a 68020 shrugs off and 68010 answers with an address error. Each one meant finding it, usually by watching the machine die in some unrelated place, and replacing it with something plainer. The system libgcc turned out to be 68020 code too.
+
+The hardware had its own surprises. MMU was tricky to get right, format-8 bus error for the 68010 reading the fault registers properly (GSR, BSR0 and BSR1), unexpected level 2 interrupts, console that draws text into video ram, 6850 ACIA support for the keyboard (otherwise it's not much of a computer), disk via WD1010 etc. 
+
+![Linux booting](img/linux.webp)
+
+**Me**: Mom, I want this Amiga 500. 
+
+**Mom**: We have an Amiga at home.
+
+Amiga at home:
+
+![Bouncy Ball](img/amiga_ball.webp)
+
+*Amiga's Bouncy Ball Demo created for the Unix PC. Plain C, writing directly to video memory. No Fat Agnus here. :(*
+
 ## FAQ
 
 **Q. It boots to a screen with only a stripe pattern**
