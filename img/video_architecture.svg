@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1015" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="18 118 864 604" width="100%" height="100%">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333" />
@@ -74,8 +74,6 @@
     }
   </style>
   </defs>
-
-  <text x="450" y="44" class="title">How the picture is made</text>
 
   <rect x="20" y="120" width="860" height="208" class="zone-machine" />
   <text x="36" y="150" class="zone-title">The machine: 20 MHz, 720 × 348, brightness effects</text>
@@ -153,15 +151,4 @@
   <text x="112" y="356" class="label-sub" style="text-anchor: start">÷ 30 = 20 MHz</text>
   <line x1="100" y1="455" x2="100" y2="512" class="conn-line" marker-end="url(#arrow)" />
   <text x="112" y="489" class="label-sub" style="text-anchor: start">÷ 8 = 75 MHz</text>
-
-  <text x="40" y="770" class="head">Two output lines for every machine line, always</text>
-  <text x="40" y="800" class="text-left">machine line: 896 clocks of 20 MHz = 44.8 µs</text>
-  <rect x="40" y="810" width="820" height="28" class="bar-machine" />
-  <text x="40" y="870" class="text-left">output lines: 1680 clocks of 75 MHz = 22.4 µs each</text>
-  <rect x="40" y="880" width="407.0" height="28" class="bar-line" />
-  <rect x="453.0" y="880" width="407.0" height="28" class="bar-line" />
-  <text x="40" y="940" class="text-left">A frame takes 16.67 ms on both sides (372 machine lines, 744 output lines).</text>
-  <text x="40" y="962" class="text-left">The output starts a fixed time after the machine and never drifts.</text>
-
-  <text x="40" y="1002" class="text-left" style="font-size: 14px">Blue boxes are memories, yellow boxes are logic, green is the outside world.</text>
 </svg>
