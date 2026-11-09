@@ -54,7 +54,7 @@ assign BUTTONS   = 0;
       [3]        Tear off paper (trigger): clears the printout
       [5:4]      Screen colour: 0 = green (default), 1 = white, 2 = amber, 3 = mint (a pale green, RGB 108 235 194)
       [6]        Invert video
-      [8:7]      Hard disk geometry: 0 = 8 heads x 16 sectors, 1 = 17 sectors (136 per cylinder), 2 = 17 sectors (272 per cylinder)
+      [8:7]      Hard disk geometry: 0 = 17 sectors (136 per cylinder, default), 1 = 17 sectors (272 per cylinder), 2 = 8 heads x 16 sectors
       [9]        Floppy: 0 = 10 sectors per track, 1 = 8 sectors per track
       [11]       Phosphor persistence (4 bit per pixel, exponential fade, dark after 16 frames = 0.27 s): 0 = on (default), 1 = off
       [13]       Screen edges (brightness falloff towards the edges): 0 = on (default), 1 = off
@@ -90,7 +90,7 @@ localparam CONF_STR = {
     "S1,IMG,Mount floppy;",
     "-;",
     "O[2:1],RAM,2 MB,4 MB,512 KB,1 MB;",
-    "O[8:7],Hard disk geometry,16 sect,17 sect (136),17 sect (272);",
+    "O[8:7],Hard disk geometry,17 sect (136),17 sect (272),16 sect;",
     "O[9],Floppy,10 sect,8 sect;",
     "-;",
     "P1,CRT effects;",

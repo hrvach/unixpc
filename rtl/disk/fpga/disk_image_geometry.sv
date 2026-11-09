@@ -16,8 +16,8 @@ module disk_image_geometry
 
     /* the WD1010's task file */
     input  [10:0] cylinder,
-    input  [2:0]  head,
-    input  [7:0]  sector_number,
+    input  [3:0]  head,                    /* 0 to 15: head bit 3 is MCR2 HDSEL3 or sector number bit 5 (disk_ctrl_pins.sv) */
+    input  [7:0]  sector_number,            /* only the low five bits address the sector */
 
     /* the WD2797's registers */
     input  [7:0]  floppy_track,              /* where the head is */
@@ -47,9 +47,9 @@ reg [31:0] hard_disk_sector;          /* 32 bit like the arithmetic of the origi
 
 always @* begin
     case (hard_disk_geometry)
-        2'd1:    hard_disk_sector = cylinder * 136 + head * 17 + sector_number;
-        2'd2:    hard_disk_sector = cylinder * 272 + head * 17 + sector_number;
-        default: hard_disk_sector = cylinder * 128 + head * 16 + sector_number;
+        2'd1:    hard_disk_sector = cylinder * 136 + head * 17 + sector_number[4:0];
+        2'd2:    hard_disk_sector = cylinder * 272 + head * 17 + sector_number[4:0];
+        default: hard_disk_sector = cylinder * 128 + head * 16 + sector_number[4:0];
     endcase
 end
 

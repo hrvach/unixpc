@@ -516,6 +516,7 @@ disk_ctrl_pins #(.DMA_TRACE(DMA_TRACE)) disk
     .clk                (clk),
     .rst                (rst),
     .hd_geom            (configuration.hard_disk_geometry),
+    .hd_head3           (mcr2[0]),              /* MCR2 HDSEL3: head 8 to 15 */
     .fd_sect8           (configuration.floppy_eight_sectors),
     .fd_present         (configuration.floppy_present),
     .fd_write_protected (configuration.floppy_write_protected),

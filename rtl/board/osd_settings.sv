@@ -15,7 +15,7 @@ module osd_settings
     /* machine */
     output         reset_request,               /* [0] */
     output   [1:0] ram_size,                    /* [2:1], in the board's encoding: 0 = 512 KB, 1 = 1 MB, 2 = 2 MB, 3 = 4 MB */
-    output   [1:0] hard_disk_geometry,          /* [8:7] */
+    output reg [1:0] hard_disk_geometry,        /* [8:7], disk code numbering: 0 = 16 sect, 1 = 17 sect (136), 2 = 17 sect (272) */
     output         floppy_eight_sectors,        /* [9]: 8 sectors per track instead of 10 */
     output         tear_off_paper,              /* [3] */
     output         serial_loopback,             /* [21] */
@@ -49,8 +49,24 @@ module osd_settings
 );
 
 assign reset_request        = status[0];
-assign hard_disk_geometry   = status[8:7];
 assign floppy_eight_sectors = status[9];
+
+/*
+    Hard disk geometry. The OSD lists 17 sect (136) first so that it is the default (MiSTer starts every option at 0); the disk code keeps its
+    own numbering, so the menu entry is translated here:
+
+        OSD [8:7]   menu entry        disk code
+           0        17 sect (136)        1
+           1        17 sect (272)        2
+           2, 3     16 sect              0
+*/
+always @* begin
+    case (status[8:7])
+        2'd0:    hard_disk_geometry = 2'd1;
+        2'd1:    hard_disk_geometry = 2'd2;
+        default: hard_disk_geometry = 2'd0;
+    endcase
+end
 assign tear_off_paper       = status[3];
 assign serial_loopback      = status[21];
 assign ethernet_present     = (status[20:19] != 2'd1);

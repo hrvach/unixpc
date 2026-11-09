@@ -36,6 +36,7 @@ module disk_ctrl_pins
     /* configuration */
     input      [1:0]  hd_geom,       /* 0: 8 heads x 16 spt, 1: 17 spt (136/cyl), 2: 17 spt (272/cyl) */
     input             fd_sect8,      /* 1: 8 sectors/track floppy, 0: 10 */
+    input             hd_head3,      /* hard disk head bit 3: MCR2 bit 0 (HDSEL3), heads 8 to 15 */
     input             fd_present,    /* a floppy is in the drive (0: commands report "not ready") */
     input             fd_write_protected, /* the floppy image is read-only (write commands end with the write protect status) */
 
@@ -120,7 +121,8 @@ wire [15:0] hd_transfer_total_bytes, fd_transfer_total_bytes, transfer_total_byt
 wire        fd_transfer_request, fd_transfer_is_write, fd_transfer_is_read_address, fd_transfer_is_write_track;
 wire [15:0] hd_read_data, fd_read_data;
 wire [10:0] hd_cylinder;
-wire [2:0]  hd_head;
+wire [2:0]  hd_head_low;             /* the WD1010's head, SDH bits 2:0 */
+wire [3:0]  hd_head;                 /* the head of the hard disk: head bit 3 comes from MCR2 or from the sector number */
 wire [7:0]  hd_sector_number;
 wire [7:0]  fd_track, fd_sector;
 wire        fd_side;
@@ -166,7 +168,7 @@ wd1010_controller hard_disk_controller
     .transfer_is_format   (hd_transfer_is_format),
     .transfer_total_bytes (hd_transfer_total_bytes),
     .cylinder             (hd_cylinder),
-    .head                 (hd_head),
+    .head                 (hd_head_low),
     .sector_number        (hd_sector_number),
     .interrupt            (hd_interrupt),
     .command_ignored      (hd_command_ignored),
@@ -215,6 +217,8 @@ wire [15:0] floppy_track_words;
 wire [4:0]  hard_disk_sectors_per_track;
 wire [28:0] hard_disk_track_fill_base, floppy_track_fill_base;
 wire [15:0] hard_disk_track_words;
+
+assign hd_head = {hd_head3 | hd_sector_number[5], hd_head_low};
 
 disk_image_geometry geometry
 (
