@@ -58,8 +58,7 @@ They're loaded every time the core starts. Both halves have to be there: without
 ### 3. Get a disk
 
 - **The easy way** is a finished disk image with UNIX System V 3.51 installed. 
-    - Arnold Robbins [made one loaded with software](https://www.skeeve.com/3b1/). 
-    - David Gesswein [made one for the VCF Museum](http://www.pdp8online.com/3b1/demos.shtml).
+    - David Gesswein [made one for the VCF Museum](http://www.pdp8online.com/3b1/3b1-hd.zip) - select 17 sect (136) from disk geometry in OSD.
 - **The long way** is installing UNIX yourself from the Foundation Set floppies on [Bitsavers](http://bitsavers.org/bits/ATT/unixPC/system_software_3.51/), following the [Software Installation Guide](http://bitsavers.org/pdf/att/3b1/999-801-025IS_ATT_UNIX_PC_System_Software_Installation_Guide_1987.pdf).
 
 Put the image in `3b1/` folder on the SD card just like the boot ROMs, and name it **boot0.vhd**.
