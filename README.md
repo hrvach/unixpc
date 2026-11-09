@@ -58,39 +58,12 @@ They're loaded every time the core starts. Both halves have to be there: without
 ### 3. Get a disk
 
 - **The easy way** is a finished disk image with UNIX System V 3.51 installed. 
-    - David Gesswein [made one for the VCF Museum](http://www.pdp8online.com/3b1/3b1-hd.zip) - select 17 sect (136) from disk geometry in OSD.
+    - David Gesswein [made one for the VCF Museum](http://www.pdp8online.com/3b1/3b1-hd.zip) - IMPORTANT: select 17 sect (136) from disk geometry in OSD.
 - **The long way** is installing UNIX yourself from the Foundation Set floppies on [Bitsavers](http://bitsavers.org/bits/ATT/unixPC/system_software_3.51/), following the [Software Installation Guide](http://bitsavers.org/pdf/att/3b1/999-801-025IS_ATT_UNIX_PC_System_Software_Installation_Guide_1987.pdf).
 
 Put the image in `3b1/` folder on the SD card just like the boot ROMs, and name it **boot0.vhd**.
 
-The `.vhd` ending is only a name here, the file is a raw sector dump. The OSD lists `.img` files only. Mounting a hard disk from the OSD restarts the machine.
-
-There's nothing to set for the disk layout. The core reads it from the **disk label** in the image's first sector (it starts with `UQVQ`), the same way the real machine's boot ROM does, and takes the cylinders, heads and sectors per track from there. It does this for a hard disk and for a floppy, every time one is mounted.
-
-These are the drive types the label can describe, for reference:
-
-<details>
-<summary>Click to expand</summary>
-
-| Type | Drive | Capacity | Cylinders | Heads | Sectors | Raw image size (bytes) |
-|---|---|---|---|---|---|---|
-| 0 | Miniscribe | 10 MB | 612 | 2 | 17 | 10,653,696 |
-| 1 | Atasi | 36 MB | 645 | 7 | 17 | 39,298,560 |
-| 2 | Maxtor | 36 MB | 903 | 5 | 17 | 39,298,560 |
-| 3 | Seagate | 10 MB | 306 | 4 | 17 | 10,653,696 |
-| 4 | Miniscribe | 20 MB | 612 | 4 | 17 | 21,307,392 |
-| 5 | Rodime | 40 MB | 640 | 8 | 17 | 44,564,480 |
-| 6 | Atasi | 40 MB | 704 | 7 | 17 | 42,893,312 |
-| 7 | Hitachi | 40 MB | 714 | 7 | 17 | 43,502,592 |
-| 8 | Miniscribe | 40 MB | 1024 | 5 | 17 | 44,564,480 |
-| 9 | Miniscribe | 64 MB | 1024 | 8 | 17 | 71,303,168 |
-| 10 | MicroSci 1050 | 40 MB | 1024 | 5 | 17 | 44,564,480 |
-| 11 | CDC WREN | 40 MB | 989 | 5 | 17 | 43,041,280 |
-| 12 | Others | (uses type 0's values) | 612 | 2 | 17 | 10,653,696 |
-
-</details>
-
-The raw size is cylinders × heads × 17 × 512 bytes. The 17th sector of each track holds alternate sectors for bad blocks, so the usable capacity is smaller than the raw size.
+The `.vhd` ending is only a name here, the file is a raw sector dump. 
 
 ### 4. Start it
 
